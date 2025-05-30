@@ -1,5 +1,5 @@
 
-import {keyframes, motion} from 'framer-motion'
+import {keyframes, motion,  AnimatePresence,scale} from 'framer-motion'
 import { a, div } from 'framer-motion/client'    
 import { FiGithub,FiLinkedin,FiTwitter, FiMenu,FiX} from 'react-icons/fi'
 import { useState } from 'react'
@@ -35,13 +35,13 @@ const closeContactForm =()=> setcontactFormOpen(false)
     ">
 
         <div className="h-10 w-10 rounded-xl bg-gradient-to-r from-gray-600 to-gray-100 flex
-        items-center justify-center text-red-600 font-bold text-xl  mr-3">AR</div>
+        items-center justify-center text-violet-600 font-bold text-xl  mr-3">AR</div>
         <span className='text-xl font-bold bg-gradient-to-r  from-gray-300 to-gray-100 bg-clip-text text-transparent'>Bala Arun Pasala</span>
     </motion.div>
 
 {/* {navbar} */}
 
-<nav div className="lg:flex hidden space-x-8 ">
+<nav className="lg:flex hidden space-x-8 ">
 {["Home","About","Projects","Experience","Education","Contact"].map((item,
     index)=>(
         
@@ -56,12 +56,12 @@ const closeContactForm =()=> setcontactFormOpen(false)
             delay:0.7+index *0.2,
         }}
         className="relative text-gray-200 dark:text-gray-200 
-        hover:text-red-600 dark:hover:text-red-400 font-medium 
+        hover:text-violet-600 dark:hover:text-violet-400 font-medium 
         transition-colors duration-300 group"
         href="#">
             {item}
             <span className='absolute bottom-0 left-0 w-0 h-0.5 
-            bg-red-600 group-hover:w-full transition-all duration-300'></span>
+            bg-violet-600 group-hover:w-full transition-all duration-300'></span>
         </motion.a>
     ))}
 
@@ -74,8 +74,8 @@ const closeContactForm =()=> setcontactFormOpen(false)
    initial={{opacity:0,scale :0.5}}
    animate={{opacity:1,scale:1}}
    transition={{delay:1.3, duration:0.8}}
-   className='text-gray-100 dark:text-gray-300 hover:text-red-600
-   dark:hover:text-red-400 transition-colors duration-300' href="">
+   className='text-gray-100 dark:text-gray-300 hover:text-violet-600
+   dark:hover:text-violet-400 transition-colors duration-300' href="">
     <FiGithub className='w-5 h-5'/>
    </motion.a>
 
@@ -83,8 +83,8 @@ const closeContactForm =()=> setcontactFormOpen(false)
    initial={{opacity:0,scale :0.5}}
    animate={{opacity:1,scale:1}}
    transition={{delay:1.3, duration:0.8}}
-   className='text-gray-100 dark:text-gray-300 hover:text-red-600
-   dark:hover:text-red-400 transition-colors duration-300' href="">
+   className='text-gray-100 dark:text-gray-300 hover:text-violet-600
+   dark:hover:text-violet-400 transition-colors duration-300' href="">
     <FiTwitter className='w-5 h-5'/>
    </motion.a>
 
@@ -92,8 +92,8 @@ const closeContactForm =()=> setcontactFormOpen(false)
    initial={{opacity:0,scale :0.5}}
    animate={{opacity:1,scale:1}}
    transition={{delay:1.3, duration:0.8}}
-   className='text-gray-100 dark:text-gray-300 hover:text-red-600
-   dark:hover:text-red-400 transition-colors duration-300' href="">
+   className='text-gray-100 dark:text-gray-300 hover:text-violet-600
+   dark:hover:text-violet-400 transition-colors duration-300' href="">
     <FiLinkedin className='w-5 h-5'/>
    </motion.a>
 
@@ -109,8 +109,8 @@ const closeContactForm =()=> setcontactFormOpen(false)
     damping:15
    }}
    className='ml-4 px-4 py-2 rounded-xl bg-gradient-to-r
-   from-gray-400 to-gray-100 text-red-700 font-bold 
-   hover:from-red-700 hover:to-red-400 hover:text-white transition-colors duration-500'
+   from-gray-400 to-gray-100 text-violet-700 font-bold 
+   hover:from-violet-700 hover:to-violet-400 hover:text-white transition-colors duration-500'
    >Hire Me</motion.button>
 
    
@@ -173,7 +173,7 @@ px-4 py-5 space-y-5 ">
             toggleMenu()
         }
         className='mt-4 block 2 w-full px-4 py-2 rounded-lg
-        bg-gradient-to-r from-red-600 to-red-400 font-bold'>
+        bg-gradient-to-r from-violet-600 to-violet-400 font-bold'>
             Contact Me 
         </button>
 
@@ -185,14 +185,91 @@ px-4 py-5 space-y-5 ">
    </motion.div>
 
    {/* contact form */}
+   <AnimatePresence>
    {
     contactFormOpen && (
-       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex
-       items-center justify-center p-4"></div>
-   
+       <motion.div 
+       initial={{opacity:0}}
+       animate={{opacity:1}}
+       transition={{duration:0.5}}
+       className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex
+       items-center justify-center p-4" >
+
+      
+      <motion.div 
+      initial={{scale:0.8,opacity:0, y:30}}
+      animate={{scale:1,opacity:1,y:0}}
+      exit={{scale:0.8,opacity:0,y:30}}
+      transition={{
+        type:"spring",
+        damping:30,
+        stiffness:200,
+        duration:0.8
+    }}
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-xl
+      w-full max-w-md p-6" >
+    <div className='flex justify-between items-center mb-4'>
+        <h1 className="text-2xl font-bold text-gray-700">Get In Touch</h1>
+        <motion.button 
+        transition={{duration:0.5}}
+        onClick={closeContactForm}>
+            <FiX className='w-5 h-5 text-gray-700 font-extrabold'/>
+        </motion.button>
+      </div>
+
+      {/* Input Forms */}
+      <form className='space-y-4 '>
+        <div>
+            <label htmlFor="name" className='block-text-sm font-medium md-1 text-gray-700'>
+                Name
+            </label>
+            <input type="text"
+                   id='name'
+                   placeholder='Your Name'
+                   className='w-full px-4 py-2 border border-gray-600 rounded-lg *:focus:ring-2
+                   focus:ring-violet-500 focus:border-violet-500 bg-gray-700' />
+        </div>
+
+        <div>
+            <label htmlFor="email" className='block-text-sm font-medium md-1 text-gray-700'>
+                Your Email
+            </label>
+            <input type="email"
+                   id='email'
+                   placeholder='Your Name'
+                   className='w-full px-4 py-2 border border-gray-600 rounded-lg *:focus:ring-2
+                   focus:ring-violet-500 focus:border-violet-500 bg-gray-700' />
+        </div> 
+
+        <div>
+            <label htmlFor="message" className='block-text-sm font-medium md-1 text-gray-700'>
+                Message
+            </label>
+            <textarea rows={4}
+                   id='message'
+                   placeholder='How can we help you?'
+                   className='w-full px-4 py-2 border border-gray-600 rounded-lg *:focus:ring-2
+                   focus:ring-violet-500 focus:border-violet-500 bg-gray-700' />
+        </div>     
+         
+         <motion.button 
+         type='submit'
+         whileHover={{scale:1.03}}
+         whileTap={{scale:0.97}}
+         className='w-full px-4 py-2 
+                 bg-gradient-to-r from-violet-600 to-violet-400
+                 hover:from-violet-700 hover:to-violet-700
+                 transition-all duration-300 rounded-lg shadow-md
+                 hover:shadow-lg'> 
+                Send Message
+         </motion.button>
+      </form>
+     </motion.div> 
+       </motion.div>
+       
    )   }
 
-
+</AnimatePresence>
    </header>
   )
 }
