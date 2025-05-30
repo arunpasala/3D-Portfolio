@@ -1,10 +1,19 @@
 
 import {keyframes, motion} from 'framer-motion'
-import { a } from 'framer-motion/client'    
-import { FiGithub,FiLinkedin,FiTwitter} from 'react-icons/fi'
-
+import { a, div } from 'framer-motion/client'    
+import { FiGithub,FiLinkedin,FiTwitter, FiMenu,FiX} from 'react-icons/fi'
+import { useState } from 'react'
 
 const Header = () => {
+//toggle menu open/close
+const [isOpen, setIsOpen]= useState(false);
+const toggleMenu =() => setIsOpen(!isOpen)
+//state to track contack form is open/close
+const [contactFormOpen, setcontactFormOpen] = useState(false);
+
+const openContactForm =()=> setcontactFormOpen(true)
+const closeContactForm =()=> setcontactFormOpen(false)  
+
   return (
    <header className='absolute w-full z-50 transition-all duration-300'>
   
@@ -91,6 +100,7 @@ const Header = () => {
 
    {/* {Hire me button} */}
    <motion.button 
+   onClick={openContactForm}
    initial={{opacity:0,scale:0}}
    animate={{opacity:1,scale:1}}
    transition={{delay:1.6, duration:0.8,
@@ -107,11 +117,80 @@ const Header = () => {
 
 </div>
 
+{/* mobile menu button view */}
+   <div className="md:hidden flex items-center">
+    <motion.button 
+    whileTap={
+        {
+            scale:0.8,
+        }
+    }
+    onClick={toggleMenu}
+    className='text-gray-300'> 
+         {isOpen? <FiX className=' h-6 w-6'/>:<FiMenu className='h-6 w-6'/>}
+    </motion.button>
 
+   </div>
 
 
   </div>
+   {/* Mobile Menu */}
+   <motion.div 
+   initial={{opacity:0 ,height:0}}
+   animate={isOpen ? {opacity:1,height:"auto"}:{opacity:0,height:0}}
+   transition={{duration:0.5}}
+   className="
+   md:hidden overflow-hidden bg-gray-900
+   dark:bg-gray-900 shadow-lg
+px-4 py-5 space-y-5 ">
+    <nav className='flex flex-col space-y-3 '>
+          {["Home","About","Projects","Experience","Education","Contact"].map((item)=>
+          (
+            <a onClick={toggleMenu} className='text-gray-300 font-medium py-2' key={item} href="#">
+                {item}
+            </a>
+          ))}
+    </nav>
 
+    <div className="pt-4 border-t 
+    border-gray-200 dark:border-gray-700
+    ">
+      <div className="flex space-x-5">
+        <a href="#">
+            <FiGithub className='h-5 w-5 text-gray-300'/>
+        </a>
+
+        <a href="#">
+            <FiTwitter className='h-5 w-5 text-gray-300'/>
+        </a>
+
+        <a href="#">
+            <FiLinkedin className='h-5 w-5 text-gray-300'/>
+        </a>
+
+        <button 
+        onClick={()=>
+            toggleMenu()
+        }
+        className='mt-4 block 2 w-full px-4 py-2 rounded-lg
+        bg-gradient-to-r from-red-600 to-red-400 font-bold'>
+            Contact Me 
+        </button>
+
+      </div>
+
+    </div>
+
+
+   </motion.div>
+
+   {/* contact form */}
+   {
+    contactFormOpen && (
+       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex
+       items-center justify-center p-4"></div>
+   
+   )   }
 
 
    </header>
